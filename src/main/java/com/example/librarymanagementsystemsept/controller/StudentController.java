@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -33,7 +35,13 @@ public class StudentController {
 
     // update the age of a student  ---> regNo, age
 
-    // get all the students in the db
+    // get all the students in the db  --> findAll()
 
     // get list of all male students
+
+    @GetMapping("/get-males")
+    public List<String> getAllMales(){
+        List<String> males = studentService.getAllMales();
+        return males;
+    }
 }
