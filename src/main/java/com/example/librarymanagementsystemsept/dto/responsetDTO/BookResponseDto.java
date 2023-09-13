@@ -1,6 +1,6 @@
 package com.example.librarymanagementsystemsept.dto.responsetDTO;
 
-import com.example.librarymanagementsystemsept.model.LibraryCard;
+import com.example.librarymanagementsystemsept.Enum.Genre;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -9,13 +9,15 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Getter
 @Setter
-public class StudentResponse {
+public class BookResponseDto {
 
-    String name;
+    String title;
 
-    String email;
+    int noOfPages;
 
-    String message;
+    Genre genre;
 
-    LibraryCardReponse libraryCardReponse;
+    double cost;
+
+    String authorName;
 }

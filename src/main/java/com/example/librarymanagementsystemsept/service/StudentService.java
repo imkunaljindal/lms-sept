@@ -3,6 +3,7 @@ package com.example.librarymanagementsystemsept.service;
 import com.example.librarymanagementsystemsept.Enum.CardStatus;
 import com.example.librarymanagementsystemsept.Enum.Gender;
 import com.example.librarymanagementsystemsept.dto.requestDTO.StudentRequest;
+import com.example.librarymanagementsystemsept.dto.responsetDTO.LibraryCardReponse;
 import com.example.librarymanagementsystemsept.dto.responsetDTO.StudentResponse;
 import com.example.librarymanagementsystemsept.model.LibraryCard;
 import com.example.librarymanagementsystemsept.repository.StudentRepository;
@@ -46,7 +47,13 @@ public class StudentService {
         studentResponse.setName(savedStudent.getName());
         studentResponse.setEmail(savedStudent.getEmail());
         studentResponse.setMessage("You have been registered");
-        studentResponse.setCardIssuedNo(savedStudent.getLibraryCard().getCardNo());
+
+        LibraryCardReponse cardReponse = new LibraryCardReponse();
+        cardReponse.setCardNo(savedStudent.getLibraryCard().getCardNo());
+        cardReponse.setIssueDate(savedStudent.getLibraryCard().getIssueDate());
+        cardReponse.setCardStatus(savedStudent.getLibraryCard().getCardStatus());
+        studentResponse.setLibraryCardReponse(cardReponse);
+
         return studentResponse;
     }
 

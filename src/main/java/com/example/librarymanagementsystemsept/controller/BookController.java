@@ -1,13 +1,14 @@
 package com.example.librarymanagementsystemsept.controller;
 
+import com.example.librarymanagementsystemsept.Enum.Genre;
+import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponseDto;
 import com.example.librarymanagementsystemsept.exception.AuthorNotFoundException;
 import com.example.librarymanagementsystemsept.model.Book;
 import com.example.librarymanagementsystemsept.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/book")
@@ -32,7 +33,20 @@ public class BookController {
 
     // give me names of all the books of a particular genre
 
-    // give me names of all the books of a particular genre and cost gretaer than 500 rs
+    // give me names of all the books of a particular genre and cost gretaer than x rs
+    @GetMapping("/get-by-genre-cost")
+    public List<BookResponseDto> getBooksByGenreAndCostGreaterThan(@RequestParam("genre") String genre,
+                                                                   @RequestParam("cost") double cost){
+       return bookService.getBooksByGenreAndCostGreaterThan(genre,cost);
+
+    }
+
+    @GetMapping("/get-by-genre-cost-hql")
+    public List<BookResponseDto> getBooksByGenreAndCostGreaterThanHQL(@RequestParam("genre") Genre genre,
+                                                                   @RequestParam("cost") double cost){
+        return bookService.getBooksByGenreAndCostGreaterThanHQL(genre,cost);
+
+    }
 
     // give me all the books having number of pages between 'a' and 'b'
 
