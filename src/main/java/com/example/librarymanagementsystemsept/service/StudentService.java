@@ -8,6 +8,7 @@ import com.example.librarymanagementsystemsept.dto.responsetDTO.StudentResponse;
 import com.example.librarymanagementsystemsept.model.LibraryCard;
 import com.example.librarymanagementsystemsept.repository.StudentRepository;
 import com.example.librarymanagementsystemsept.model.Student;
+import com.example.librarymanagementsystemsept.transformer.LibraryCardTransformer;
 import com.example.librarymanagementsystemsept.transformer.StudentTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -26,51 +27,16 @@ public class StudentService {
 
     public StudentResponse addStudent(StudentRequest studentRequest) {
 
-        // covert request dto ->> model
-//        Student student = new Student();
-//        student.setName(studentRequest.getName());
-//        student.setAge(studentRequest.getAge());
-//        student.setGender(studentRequest.getGender());
-//        student.setEmail(studentRequest.getEmail());
-
         // create object using builder
-       Student student = StudentTransformer.StudentRequestToStudent(studentRequest);
+         Student student = StudentTransformer.StudentRequestToStudent(studentRequest);
+         LibraryCard card = LibraryCardTransformer.prepareLibraryCard();
 
-        // give a library card
-//        LibraryCard libraryCard = new LibraryCard();
-//        libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
-//        libraryCard.setCardStatus(CardStatus.ACTIVE);
-//        libraryCard.setStudent(student);
-        LibraryCard libraryCard = LibraryCard.builder()
-                .cardNo(String.valueOf(UUID.randomUUID()))
-                .cardStatus(CardStatus.ACTIVE)
-                .student(student)
-                .build();
-
-        student.setLibraryCard(libraryCard);  // set librarycard for student
-
-        Student savedStudent = studentRepository.save(student); // save both student and library card
+         card.setStudent(student);
+         student.setLibraryCard(card);  // set librarycard for student
+         Student savedStudent = studentRepository.save(student); // save both student and library card
 
         // saved model to response dto
-        StudentResponse studentResponse = new StudentResponse();
-        studentResponse.setName(savedStudent.getName());
-        studentResponse.setEmail(savedStudent.getEmail());
-        studentResponse.setMessage("You have been registered");
-//
-//        LibraryCardReponse cardReponse = new LibraryCardReponse();
-//        cardReponse.setCardNo(savedStudent.getLibraryCard().getCardNo());
-//        cardReponse.setIssueDate(savedStudent.getLibraryCard().getIssueDate());
-//        cardReponse.setCardStatus(savedStudent.getLibraryCard().getCardStatus());
-
-        LibraryCardReponse cardReponse = LibraryCardReponse.builder()
-                .cardNo(savedStudent.getLibraryCard().getCardNo())
-                .cardStatus(savedStudent.getLibraryCard().getCardStatus())
-                .issueDate(savedStudent.getLibraryCard().getIssueDate())
-                .build();
-
-        studentResponse.setLibraryCardReponse(cardReponse);
-
-        return studentResponse;
+         return StudentTransformer.StudentToStudentResponse(savedStudent);
     }
 
     public Student getStudent(int regNo) {

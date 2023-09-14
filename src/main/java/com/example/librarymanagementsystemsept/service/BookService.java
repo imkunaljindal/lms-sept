@@ -1,12 +1,13 @@
 package com.example.librarymanagementsystemsept.service;
 
 import com.example.librarymanagementsystemsept.Enum.Genre;
-import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponseDto;
+import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponse;
 import com.example.librarymanagementsystemsept.exception.AuthorNotFoundException;
 import com.example.librarymanagementsystemsept.model.Author;
 import com.example.librarymanagementsystemsept.model.Book;
 import com.example.librarymanagementsystemsept.repository.AuthorRepository;
 import com.example.librarymanagementsystemsept.repository.BookRepository;
+import com.example.librarymanagementsystemsept.transformer.BookTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,40 +41,26 @@ public class BookService {
 
     }
 
-    public List<BookResponseDto> getBooksByGenreAndCostGreaterThan(String genre, double cost) {
+    public List<BookResponse> getBooksByGenreAndCostGreaterThan(String genre, double cost) {
 
         List<Book> books = bookRepository.getBooksByGenreAndCostGreaterThan(genre,cost);
 
         // prepare the response. convert model to dto
-
-        List<BookResponseDto> response = new ArrayList<>();
+        List<BookResponse> response = new ArrayList<>();
         for(Book book: books){
-            BookResponseDto bookResponseDto = new BookResponseDto();
-            bookResponseDto.setTitle(book.getTitle());
-            bookResponseDto.setCost(book.getCost());
-            bookResponseDto.setGenre(book.getGenre());
-            bookResponseDto.setNoOfPages(book.getNoOfPages());
-            bookResponseDto.setAuthorName(book.getAuthor().getName());
-            response.add(bookResponseDto);
+            response.add(BookTransformer.BookToBookResponse(book));
         }
-
         return response;
     }
 
-    public List<BookResponseDto> getBooksByGenreAndCostGreaterThanHQL(Genre genre, double cost) {
+    public List<BookResponse> getBooksByGenreAndCostGreaterThanHQL(Genre genre, double cost) {
 
         List<Book> books = bookRepository.getBooksByGenreAndCostGreaterThanHQL(genre,cost);
 
         // prepare the response. convert model to dto
-        List<BookResponseDto> response = new ArrayList<>();
+        List<BookResponse> response = new ArrayList<>();
         for(Book book: books){
-            BookResponseDto bookResponseDto = new BookResponseDto();
-            bookResponseDto.setTitle(book.getTitle());
-            bookResponseDto.setCost(book.getCost());
-            bookResponseDto.setGenre(book.getGenre());
-            bookResponseDto.setNoOfPages(book.getNoOfPages());
-            bookResponseDto.setAuthorName(book.getAuthor().getName());
-            response.add(bookResponseDto);
+            response.add(BookTransformer.BookToBookResponse(book));
         }
         return response;
     }

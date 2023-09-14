@@ -1,8 +1,7 @@
 package com.example.librarymanagementsystemsept.controller;
 
 import com.example.librarymanagementsystemsept.Enum.Genre;
-import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponseDto;
-import com.example.librarymanagementsystemsept.exception.AuthorNotFoundException;
+import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponse;
 import com.example.librarymanagementsystemsept.model.Book;
 import com.example.librarymanagementsystemsept.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +34,14 @@ public class BookController {
 
     // give me names of all the books of a particular genre and cost gretaer than x rs
     @GetMapping("/get-by-genre-cost")
-    public List<BookResponseDto> getBooksByGenreAndCostGreaterThan(@RequestParam("genre") String genre,
-                                                                   @RequestParam("cost") double cost){
+    public List<BookResponse> getBooksByGenreAndCostGreaterThan(@RequestParam("genre") String genre,
+                                                                @RequestParam("cost") double cost){
        return bookService.getBooksByGenreAndCostGreaterThan(genre,cost);
 
     }
 
     @GetMapping("/get-by-genre-cost-hql")
-    public List<BookResponseDto> getBooksByGenreAndCostGreaterThanHQL(@RequestParam("genre") Genre genre,
+    public List<BookResponse> getBooksByGenreAndCostGreaterThanHQL(@RequestParam("genre") Genre genre,
                                                                    @RequestParam("cost") double cost){
         return bookService.getBooksByGenreAndCostGreaterThanHQL(genre,cost);
 
