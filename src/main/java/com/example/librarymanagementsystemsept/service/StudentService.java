@@ -8,6 +8,7 @@ import com.example.librarymanagementsystemsept.dto.responsetDTO.StudentResponse;
 import com.example.librarymanagementsystemsept.model.LibraryCard;
 import com.example.librarymanagementsystemsept.repository.StudentRepository;
 import com.example.librarymanagementsystemsept.model.Student;
+import com.example.librarymanagementsystemsept.transformer.StudentTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
@@ -26,17 +27,25 @@ public class StudentService {
     public StudentResponse addStudent(StudentRequest studentRequest) {
 
         // covert request dto ->> model
-        Student student = new Student();
-        student.setName(studentRequest.getName());
-        student.setAge(studentRequest.getAge());
-        student.setGender(studentRequest.getGender());
-        student.setEmail(studentRequest.getEmail());
+//        Student student = new Student();
+//        student.setName(studentRequest.getName());
+//        student.setAge(studentRequest.getAge());
+//        student.setGender(studentRequest.getGender());
+//        student.setEmail(studentRequest.getEmail());
+
+        // create object using builder
+       Student student = StudentTransformer.StudentRequestToStudent(studentRequest);
 
         // give a library card
-        LibraryCard libraryCard = new LibraryCard();
-        libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
-        libraryCard.setCardStatus(CardStatus.ACTIVE);
-        libraryCard.setStudent(student);
+//        LibraryCard libraryCard = new LibraryCard();
+//        libraryCard.setCardNo(String.valueOf(UUID.randomUUID()));
+//        libraryCard.setCardStatus(CardStatus.ACTIVE);
+//        libraryCard.setStudent(student);
+        LibraryCard libraryCard = LibraryCard.builder()
+                .cardNo(String.valueOf(UUID.randomUUID()))
+                .cardStatus(CardStatus.ACTIVE)
+                .student(student)
+                .build();
 
         student.setLibraryCard(libraryCard);  // set librarycard for student
 
@@ -47,11 +56,18 @@ public class StudentService {
         studentResponse.setName(savedStudent.getName());
         studentResponse.setEmail(savedStudent.getEmail());
         studentResponse.setMessage("You have been registered");
+//
+//        LibraryCardReponse cardReponse = new LibraryCardReponse();
+//        cardReponse.setCardNo(savedStudent.getLibraryCard().getCardNo());
+//        cardReponse.setIssueDate(savedStudent.getLibraryCard().getIssueDate());
+//        cardReponse.setCardStatus(savedStudent.getLibraryCard().getCardStatus());
 
-        LibraryCardReponse cardReponse = new LibraryCardReponse();
-        cardReponse.setCardNo(savedStudent.getLibraryCard().getCardNo());
-        cardReponse.setIssueDate(savedStudent.getLibraryCard().getIssueDate());
-        cardReponse.setCardStatus(savedStudent.getLibraryCard().getCardStatus());
+        LibraryCardReponse cardReponse = LibraryCardReponse.builder()
+                .cardNo(savedStudent.getLibraryCard().getCardNo())
+                .cardStatus(savedStudent.getLibraryCard().getCardStatus())
+                .issueDate(savedStudent.getLibraryCard().getIssueDate())
+                .build();
+
         studentResponse.setLibraryCardReponse(cardReponse);
 
         return studentResponse;
@@ -76,4 +92,5 @@ public class StudentService {
 
         return names;
     }
+
 }
