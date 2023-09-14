@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystemsept.service;
+package com.example.librarymanagementsystemsept.service.impl;
 
 import com.example.librarymanagementsystemsept.Enum.CardStatus;
 import com.example.librarymanagementsystemsept.Enum.Gender;

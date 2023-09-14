@@ -3,7 +3,7 @@ package com.example.librarymanagementsystemsept.controller;
 import com.example.librarymanagementsystemsept.Enum.Genre;
 import com.example.librarymanagementsystemsept.dto.responsetDTO.BookResponse;
 import com.example.librarymanagementsystemsept.model.Book;
-import com.example.librarymanagementsystemsept.service.BookService;
+import com.example.librarymanagementsystemsept.service.impl.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

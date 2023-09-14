@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystemsept.service;
+package com.example.librarymanagementsystemsept.service.impl;
 
 import com.example.librarymanagementsystemsept.Enum.TransactionStatus;
 import com.example.librarymanagementsystemsept.dto.responsetDTO.IssueBookResponse;

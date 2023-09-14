@@ -2,7 +2,7 @@ package com.example.librarymanagementsystemsept.controller;
 
 import com.example.librarymanagementsystemsept.dto.requestDTO.StudentRequest;
 import com.example.librarymanagementsystemsept.dto.responsetDTO.StudentResponse;
-import com.example.librarymanagementsystemsept.service.StudentService;
+import com.example.librarymanagementsystemsept.service.impl.StudentService;
 import com.example.librarymanagementsystemsept.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
