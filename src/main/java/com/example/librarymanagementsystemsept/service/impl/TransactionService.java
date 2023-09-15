@@ -11,6 +11,8 @@ import com.example.librarymanagementsystemsept.repository.BookRepository;
 import com.example.librarymanagementsystemsept.repository.StudentRepository;
 import com.example.librarymanagementsystemsept.repository.TransactionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -24,6 +26,9 @@ public class TransactionService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     @Autowired
     TransactionRepo transactionRepo;
@@ -67,6 +72,18 @@ public class TransactionService {
 
         Book savedBook = bookRepository.save(book);  // book and transaction
         Student savedStudent = studentRepository.save(student);  // student and transaction
+
+       //  send an email
+        String text = "Hi! " + student.getName() + " The below book has been issued to you\n" +
+                book.getTitle() + " \nThis is the transaction number: "+savedTransaction.getTransactionNumber();
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom("acciojobspringbackend@gmail.com");
+        simpleMailMessage.setTo(student.getEmail());
+        simpleMailMessage.setSubject("Congrats!! Book Issued");
+        simpleMailMessage.setText(text);
+
+        javaMailSender.send(simpleMailMessage);
 
         // prepare response
         return IssueBookResponse.builder()

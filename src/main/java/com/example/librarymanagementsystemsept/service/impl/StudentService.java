@@ -39,11 +39,11 @@ public class StudentService {
          return StudentTransformer.StudentToStudentResponse(savedStudent);
     }
 
-    public Student getStudent(int regNo) {
+    public StudentResponse getStudent(int regNo) {
 
         Optional<Student> studentOptional = studentRepository.findById(regNo);
         if(studentOptional.isPresent()){
-            return studentOptional.get();
+            return StudentTransformer.StudentToStudentResponse(studentOptional.get());
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystemsept.controller;
 
 import com.example.librarymanagementsystemsept.model.Author;
+import com.example.librarymanagementsystemsept.service.AuthorService;
 import com.example.librarymanagementsystemsept.service.impl.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthorController {
 
     @Autowired
-    AuthorServiceImpl authorServiceImpl;
+    AuthorService authorService;
 
     @PostMapping("/add")
     public ResponseEntity addAuthor(@RequestBody Author author){
-        String response = authorServiceImpl.addAuthor(author);
+        String response = authorService.addAuthor(author);
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
